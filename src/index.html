@@ -11,9 +11,19 @@
       integrity="sha512-ISS7cAi1PEhQ8jnbJpJZMd29NlhNj4AWYyLOSp2CE/CsHxTCu+r+t0D2yoJudVrd0/8fTVPUVDzY5Tvli75u/g=="
       crossorigin="anonymous"
     />
+    <link href="../node_modules/@pnotify/core/dist/PNotify.css" rel="stylesheet" type="text/css" />
+    <link
+      href="../node_modules/@pnotify/mobile/dist/PNotifyMobile.css"
+      rel="stylesheet"
+      type="text/css"
+    />
   </head>
   <body>
-    <input type="text" class="text__input" placeholder="Enter country name..." />
+    <div class="container">
+      <input type="text" class="text__input" placeholder="Enter country name..." />
+      <ul class="country-name__list"></ul>
+    </div>
+    <section class="country__section"></section>
     <script src="./index.js"></script>
   </body>
 </html>
