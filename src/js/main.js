@@ -54,5 +54,5 @@ function resetInfo() {
 }
 
 function onError(error) {
-  console.warn('Что то пошло не так');
+  console.log(error);
 }
