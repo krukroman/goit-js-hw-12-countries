@@ -2,9 +2,7 @@ import API from './fetchCountries';
 import countryNameListTmp from '../templates/country-name-list.hbs';
 import countryInformationTmp from '../templates/country-information.hbs';
 let debounce = require('lodash.debounce');
-import { error, defaultModules } from '../../node_modules/@pnotify/core/dist/PNotify.js';
-import * as PNotifyMobile from '../../node_modules/@pnotify/mobile/dist/PNotifyMobile.js';
-defaultModules.set(PNotifyMobile, {});
+
 const refs = {
   countryNameInput: document.querySelector('.text__input'),
   countryNameList: document.querySelector('.country-name__list'),
@@ -25,14 +23,6 @@ function onInput(e) {
 function renderInformation(country) {
   if (country.length > 10) {
     resetInfo();
-    error({
-      text: 'Слишком много совпадений, продолжите ввод',
-      type: 'error',
-      autoOpen: 'false',
-      width: '400px',
-      delay: 3000,
-      animation: 'fade',
-    });
     return;
   } else if (country.length > 1 && country.length <= 10) {
     renderCountryNameList(country);
