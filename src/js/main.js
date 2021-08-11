@@ -1,13 +1,11 @@
 import API from './fetchCountries';
+import getRefs from './get-refs';
+import errorNotif from './notify';
 import countryNameListTmp from '../templates/country-name-list.hbs';
 import countryInformationTmp from '../templates/country-information.hbs';
 let debounce = require('lodash.debounce');
 
-const refs = {
-  countryNameInput: document.querySelector('.text__input'),
-  countryNameList: document.querySelector('.country-name__list'),
-  countrySection: document.querySelector('.country__section'),
-};
+const refs = getRefs();
 
 refs.countryNameInput.addEventListener('input', debounce(onInput, 500));
 
@@ -23,6 +21,15 @@ function onInput(e) {
 function renderInformation(country) {
   if (country.length > 10) {
     resetInfo();
+    errorNotif({
+      text: 'Слишком много совпадений, продолжите ввод',
+      type: 'error',
+      autoOpen: 'false',
+      height: '200px',
+      width: '400px',
+      delay: 4500,
+      animation: 'fade',
+    });
     return;
   } else if (country.length > 1 && country.length <= 10) {
     renderCountryNameList(country);
@@ -32,19 +39,16 @@ function renderInformation(country) {
 }
 
 function renderCountryInfo(country) {
-  refs.countryNameList.innerHTML = '';
   let markupInfo = countryInformationTmp(country);
   refs.countrySection.innerHTML = markupInfo;
 }
 
 function renderCountryNameList(country) {
-  refs.countrySection.innerHTML = '';
   let murkupList = countryNameListTmp(country);
-  refs.countryNameList.innerHTML = murkupList;
+  refs.countrySection.innerHTML = murkupList;
 }
 
 function resetInfo() {
-  refs.countryNameList.innerHTML = '';
   refs.countrySection.innerHTML = '';
 }
 
