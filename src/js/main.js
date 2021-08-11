@@ -22,6 +22,7 @@ function renderInformation(country) {
   if (country.length > 10) {
     resetInfo();
     errorNotif({
+      title: 'Предупреждение!!!',
       text: 'Слишком много совпадений, продолжите ввод',
       type: 'error',
       autoOpen: 'false',
@@ -53,6 +54,5 @@ function resetInfo() {
 }
 
 function onError(error) {
-  alert('Что то пошло не так');
-  console.log(error);
+  console.warn('Что то пошло не так');
 }
