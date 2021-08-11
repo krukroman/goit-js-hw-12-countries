@@ -26,7 +26,7 @@ function renderInformation(country) {
       text: 'Слишком много совпадений, продолжите ввод',
       type: 'error',
       autoOpen: 'false',
-      height: '200px',
+      height: '300px',
       width: '400px',
       delay: 4500,
       animation: 'fade',
