@@ -1,6 +1,6 @@
 import API from './fetchCountries';
 import getRefs from './get-refs';
-import errorNotif from './notify';
+import errorNotification from './notify';
 import countryNameListTmp from '../templates/country-name-list.hbs';
 import countryInformationTmp from '../templates/country-information.hbs';
 let debounce = require('lodash.debounce');
@@ -15,37 +15,45 @@ function onInput(e) {
     resetInfo();
     return;
   }
-  API.fetchCountries(searchQuery).then(renderInformation).catch(onError);
+  API.fetchCountries(searchQuery)
+    .then(countries => {
+      if (countries.status === 404) {
+        resetInfo();
+        throw error;
+      }
+      renderInformation(countries);
+    })
+    .catch(onError);
 }
 
-function renderInformation(country) {
-  if (country.length > 10) {
+function renderInformation(countries) {
+  if (countries.length > 10) {
     resetInfo();
-    errorNotif({
+    errorNotification({
       title: 'Предупреждение!!!',
       text: 'Слишком много совпадений, продолжите ввод',
+      delay: 3000,
       type: 'error',
       autoOpen: 'false',
       height: '300px',
       width: '400px',
-      delay: 4500,
       animation: 'fade',
     });
     return;
-  } else if (country.length > 1 && country.length <= 10) {
-    renderCountryNameList(country);
-  } else if (country.length === 1) {
-    renderCountryInfo(country);
+  } else if (countries.length > 1 && countries.length <= 10) {
+    renderCountryNameList(countries);
+  } else if (countries.length === 1) {
+    renderCountryInfo(countries);
   }
 }
 
-function renderCountryInfo(country) {
-  let markupInfo = countryInformationTmp(country);
+function renderCountryInfo(countries) {
+  let markupInfo = countryInformationTmp(countries);
   refs.countrySection.innerHTML = markupInfo;
 }
 
-function renderCountryNameList(country) {
-  let murkupList = countryNameListTmp(country);
+function renderCountryNameList(countries) {
+  let murkupList = countryNameListTmp(countries);
   refs.countrySection.innerHTML = murkupList;
 }
 
@@ -54,5 +62,14 @@ function resetInfo() {
 }
 
 function onError(error) {
-  console.log(error);
+  errorNotification({
+    title: 'Ошибка!!!',
+    text: 'По вашему запросу ничего не найдено. Введите нормальный запрос',
+    delay: 4000,
+    type: 'error',
+    autoOpen: 'false',
+    height: '500px',
+    width: '600px',
+    animation: 'fade',
+  });
 }
