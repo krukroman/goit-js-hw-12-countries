@@ -1,8 +1,12 @@
 .country-name__list {
-  margin-left: 200px;
+  margin: 0 auto;
+  width: 600px;
 }
 
 .country-name__item {
   font-size: 2rem;
   font-weight: bold;
+  &:not(:last-child) {
+    margin-bottom: 15px;
+  }
 }
